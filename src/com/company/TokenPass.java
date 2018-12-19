@@ -8,11 +8,10 @@ public class TokenPass {
     private int CurrentPlayer;
     private int playerCount;
 
-    public TokenPass(int playerCount, int CurrentPlayer, int[] board)
+    public TokenPass(int playerCount)
     {
        this.playerCount = playerCount;
-       this.CurrentPlayer = CurrentPlayer;
-       this.board = board;
+       this.CurrentPlayer = (int) (Math.random() * playerCount);
     }
 
     public int[] getBoard()
@@ -27,24 +26,21 @@ public class TokenPass {
     public void distributeCurrentPlayerTokens()
     {
         int beans = board[CurrentPlayer];
-        while (beans>0){
-        for (int i = 1 ; i<board.length ; i++)
+        board[CurrentPlayer] = 0;
+        int i = CurrentPlayer + 1;
+
+        while(beans > 0)
         {
-            board[CurrentPlayer+i] ++;
-            beans --;
-        }
-        if (beans>0){
-            for (int i = 0 ; i<CurrentPlayer ; i++)
-            {
-                board[i] ++;
-                beans --;
-            }
+            if(i == board.length)
+                i = 0;
+
+            board[i]++;
+            beans--;
+            i++;
         }
     }
 
-    public int getCurrentPlayer()
-    {
-        CurrentPlayer = (int) (Math.random() * playerCount);
+    public int getCurrentPlayer() {
         return CurrentPlayer;
     }
 }
